@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "PRIME Hostess"
+description = "A premium event staffing agency website for PRIME Hostess, with a cinematic hero, service overview, curated team profiles, portfolio highlights, and a working inquiry form."
+version = "1.0.0"
+id = "artifacts/prime-hostess"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23149
+
+[services.development]
+run = "pnpm --filter @workspace/prime-hostess run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/prime-hostess", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/prime-hostess/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23149"
+BASE_PATH = "/"
